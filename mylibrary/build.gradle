@@ -5,6 +5,17 @@ android {
     buildToolsVersion "24.0.2"
 
     defaultConfig {
+        /**
+         * To solve the bug reported at: https://goo.gl/pAZFtV
+         * where buildType is not propagated properly from app module
+         * down to library module.
+         * The following line will publish all variants of the lib
+         * and it should also be accompanied with changing
+         * the compile command under dependencies{} in the app module
+         * to multiple lines, one per variant. <variant>Compile
+         */
+        publishNonDefault true
+
         minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
