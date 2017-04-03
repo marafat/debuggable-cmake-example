@@ -33,12 +33,22 @@ find_library( # Sets the name of the path variable.
               # you want CMake to locate.
               log )
 
+
+# Add my-second-native-lib subdirectory so this cmake can see the other cmake file
+set( second_native_lib_dir ../my-native-submodule )
+add_subdirectory( ${second_native_lib_dir} my-native-submodule )
+
+# include all
+target_include_directories( my-native-lib
+                            PRIVATE ${second_native_lib_dir} )
+
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in the
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
                        my-native-lib
+                       my-second-native-lib
 
                        # Links the target library to the log library
                        # included in the NDK.

@@ -1,5 +1,6 @@
 #include <jni.h>
 #include <string>
+#include <NativeSubmodule.h>
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_mylibrary_MyLibraryManager_getMsgFromNative(JNIEnv *env, jobject instance) {
@@ -9,6 +10,9 @@ Java_com_example_mylibrary_MyLibraryManager_getMsgFromNative(JNIEnv *env, jobjec
     int c = a * b;
 
     std::string msg = "Hello From Native";
+
+    // test native submodule
+    msg.append(getMsgFromNativeSubmodule());
 
     return env->NewStringUTF(msg.c_str());
 }
