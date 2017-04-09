@@ -4,4 +4,7 @@ add_library(my-second-native-lib
 
 # add lib dependencies
 target_link_libraries(my-second-native-lib
+                      android
+                      log
+                      EGL
                       GLESv2)
