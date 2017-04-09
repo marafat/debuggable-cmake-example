@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHelloTextView = (TextView) findViewById(R.id.hello_textView);
-        mHelloTextView.setText(MyLibraryManager.getInstance().getMsgFromNative());
+        mHelloTextView.setText(MyLibraryManager.getMsgFromNative());
 
         openGlButton = (Button) findViewById(R.id.openGL_button);
         openGlButton.setOnClickListener(new View.OnClickListener() {

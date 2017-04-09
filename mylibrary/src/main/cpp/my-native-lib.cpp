@@ -2,6 +2,28 @@
 #include <string>
 #include <NativeSubmodule.h>
 
+extern "C" JNIEXPORT void JNICALL
+Java_com_example_mylibrary_MyLibraryManager_onSurfaceChanged(JNIEnv *env, jclass type, jint width,
+                                                             jint height) {
+
+    on_surface_changed(width, height);
+
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_example_mylibrary_MyLibraryManager_onDrawFrame(JNIEnv *env, jclass type) {
+
+    on_draw_frame();
+
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_example_mylibrary_MyLibraryManager_onSurfaceCreated(JNIEnv *env, jclass type) {
+
+    on_surface_created();
+
+}
+
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_mylibrary_MyLibraryManager_getMsgFromNative(JNIEnv *env, jobject instance) {
 

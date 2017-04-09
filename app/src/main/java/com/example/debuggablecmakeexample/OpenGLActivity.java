@@ -3,13 +3,14 @@ package com.example.debuggablecmakeexample;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
-import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import com.example.mylibrary.MyLibraryManager;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -19,6 +20,29 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class OpenGLActivity extends AppCompatActivity {
+
+    //region Renderer Wrapper
+    /***********************************************/
+    // Renderer Wrapper
+    /***********************************************/
+    private class RendererWrapper implements GLSurfaceView.Renderer {
+
+        @Override
+        public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+            MyLibraryManager.onSurfaceCreated();
+        }
+
+        @Override
+        public void onSurfaceChanged(GL10 gl, int width, int height) {
+            MyLibraryManager.onSurfaceChanged(width, height);
+        }
+
+        @Override
+        public void onDrawFrame(GL10 gl) {
+            MyLibraryManager.onDrawFrame();
+        }
+    }
+    //endregion
 
     //region ButterKinfe View Bindings
     /***********************************************/
@@ -101,30 +125,6 @@ public class OpenGLActivity extends AppCompatActivity {
         ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
 
         return configurationInfo.reqGlEsVersion >= 0x0002;
-    }
-    //endregion
-
-
-    //region Renderer Wrapper
-    /***********************************************/
-    // Renderer Wrapper
-    /***********************************************/
-    private class RendererWrapper implements GLSurfaceView.Renderer {
-
-        @Override
-        public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-            GLES20.glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
-        }
-
-        @Override
-        public void onSurfaceChanged(GL10 gl, int width, int height) {
-            // nothing yet
-        }
-
-        @Override
-        public void onDrawFrame(GL10 gl) {
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-        }
     }
     //endregion
 

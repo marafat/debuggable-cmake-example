@@ -5,18 +5,15 @@ package com.example.mylibrary;
  */
 
 public class MyLibraryManager {
-    private static MyLibraryManager ourInstance = new MyLibraryManager();
-
-    public static MyLibraryManager getInstance() {
-        return ourInstance;
-    }
-
-    private MyLibraryManager() {
-    }
-
     static {
         System.loadLibrary("my-native-lib");
     }
 
-    public native String getMsgFromNative();
+    public static native String getMsgFromNative();
+
+    public static native void onSurfaceCreated();
+
+    public static native void onSurfaceChanged(int width, int height);
+
+    public static native void onDrawFrame();
 }
