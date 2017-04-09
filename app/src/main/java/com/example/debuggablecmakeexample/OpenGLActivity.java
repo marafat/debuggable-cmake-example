@@ -17,6 +17,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class OpenGLActivity extends AppCompatActivity {
@@ -51,7 +52,6 @@ public class OpenGLActivity extends AppCompatActivity {
     Unbinder butterKnifeUnbinder;
     @BindView(R.id.surfaceView_frame) FrameLayout surfaceViewFrameLayout;
     @BindView(R.id.play_button) Button playButton;
-    @BindView(R.id.toggle_fullscreen_button) Button toggleFullscreenButton;
     //endregion
 
     //region Fields
@@ -60,6 +60,7 @@ public class OpenGLActivity extends AppCompatActivity {
     /***********************************************/
     private GLSurfaceView surfaceView;
     private boolean didSetRenderer = false;
+    private boolean playing = false;
     //endregion
 
 
@@ -85,6 +86,7 @@ public class OpenGLActivity extends AppCompatActivity {
         surfaceView = new GLSurfaceView(this);
         surfaceView.setEGLContextClientVersion(2);
         surfaceView.setRenderer(new RendererWrapper());
+        surfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         didSetRenderer = true;
 
         // add surface view in its frame
@@ -125,6 +127,24 @@ public class OpenGLActivity extends AppCompatActivity {
         ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
 
         return configurationInfo.reqGlEsVersion >= 0x0002;
+    }
+    //endregion
+
+    //region Buttons' Actions
+    /***********************************************/
+    // Buttons' Actions
+    /***********************************************/
+    @OnClick(R.id.play_button)
+    public void togglePlaying() {
+        surfaceView.setRenderMode(playing ?
+                GLSurfaceView.RENDERMODE_WHEN_DIRTY :
+                GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        playing = !playing;
+
+        playButton.setText(playing ? "pause" : "play");
+
+        String toastMsg = playing ? "Playing..." : "Paused";
+        Toast.makeText(this, toastMsg, Toast.LENGTH_SHORT).show();
     }
     //endregion
 
